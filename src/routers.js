@@ -1,11 +1,12 @@
-import ProblemList from './components/ProblemList.vue'
+// import ProblemList from './components/ProblemList.vue'
 import NewProblem from "@/components/NewProblem.vue";
+import Main from "@/components/Main.vue";
 
 const routers = [
     {
         path: '/',  // 设置好route
         name: 'MainPage',
-        component: ProblemList
+        component: Main
     },{
         path: '/new/problem',  // 设置好route
         name: 'NewProblem',
