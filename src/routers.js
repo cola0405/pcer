@@ -1,4 +1,3 @@
-// import ProblemList from './components/ProblemList.vue'
 import NewProblem from "@/components/NewProblem.vue";
 import Main from "@/components/Main.vue";
 

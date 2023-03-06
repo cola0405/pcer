@@ -52,6 +52,7 @@
 <script>
 // import Button from 'element-ui'
 import ProblemFilter from "@/components/ProblemFilter.vue";
+import {getProblemList} from "@/api/problem"
 
 export default {
   name: "Main",
@@ -154,11 +155,15 @@ export default {
     }
   },
   beforeMount() {
-    // init table data
-    this.resetTableData()
+    getProblemList().then((res) => {
+      this.originData = res.data
 
-    // init page 1
-    this.updatePage(1)
+      // init table data
+      this.resetTableData()
+
+      // init page 1
+      this.updatePage(1)
+    })
   },
 
 }
