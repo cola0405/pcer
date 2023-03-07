@@ -8,7 +8,7 @@ const routers = [
         component: Main,
         children: [
             {
-                path: 'problem/list',
+                path: '',
                 component: ProblemList
             },
             {
