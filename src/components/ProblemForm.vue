@@ -1,0 +1,127 @@
+<template>
+  <div>
+    <el-page-header @back="goBack" content="题目信息"></el-page-header>
+    <el-form ref="form" :model="form" label-width="80px">
+      <el-row type="flex" justify="start">
+        <el-col :span="5">
+          <el-form-item label="题目名称">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="7" align="left" :offset="3">
+          <el-form-item label="题目难度">
+            <el-select v-model="form.difficulty" placeholder="题目难度">
+              <el-option label="简单" value="简单"></el-option>
+              <el-option label="中等" value="中等"></el-option>
+              <el-option label="困难" value="困难"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <br>
+
+      <el-row type="flex">
+        <el-col :span="20">
+          <el-form-item label="题目内容">
+            <mavon-editor
+                placeholder="请输入题目内容..."
+                :toolbars="toolbars"
+                v-model="form.content"/>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="20">
+          <el-form-item>
+            <el-button type="primary" @click="onCreate" v-if="$route.query.type !== 'update'">提交</el-button>
+            <el-button type="primary" @click="onUpdate" v-else>提交</el-button>
+            <el-button>取消</el-button>
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
+  </div>
+
+</template>
+
+<script>
+export default {
+  name: "ProblemForm",
+  data() {
+    return {
+      form: {
+        name: '',
+        difficulty: '',
+        content: ''
+      },
+      toolbars: {
+        bold: false, // 粗体
+        italic: false, // 斜体
+        header: false, // 标题
+        underline: false, // 下划线
+        strikethrough: false, // 中划线
+        mark: false, // 标记
+        superscript: false, // 上角标
+        subscript: false, // 下角标
+        quote: false, // 引用
+        ol: false, // 有序列表
+        ul: false, // 无序列表
+        link: false, // 链接
+        imagelink: true, // 图片链接
+        code: true, // code
+        table: false, // 表格
+        fullscreen: false, // 全屏编辑
+        readmodel: false, // 沉浸式阅读
+        htmlcode: false, // 展示html源码
+        help: false, // 帮助
+        /* 1.3.5 */
+        undo: false, // 上一步
+        redo: false, // 下一步
+        trash: false, // 清空
+        save: false, // 保存（触发events中的save事件）
+        navigation: false, // 导航目录
+        alignleft: false, // 左对齐
+        aligncenter: false, // 居中
+        alignright: false, // 右对齐
+        /* 2.2.1 */
+        subfield: true, // 单双栏模式
+        preview: true // 预览
+      }
+    }
+  },
+  methods: {
+    onCreate() {
+      console.log('create');
+    },
+    onUpdate(){
+      console.log('update');
+    },
+    goBack(){
+      this.$router.back()
+    }
+  },
+  beforeCreate() {
+
+  },
+  created() {
+    if(this.$route.query.type === 'update'){
+      this.form.name = this.$route.query.problemData.name
+      this.form.difficulty = this.$route.query.problemData.difficulty;
+  }
+  }
+}
+</script>
+
+<style scoped>
+.mavon-editor {
+  width: 100%;
+  height: 100%;
+}
+
+.el-page-header{
+  margin-bottom: 50px;
+}
+</style>

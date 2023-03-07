@@ -1,6 +1,6 @@
-import NewProblem from "@/components/NewProblem.vue";
 import Main from "@/components/Main.vue";
 import ProblemList from "@/components/ProblemList.vue";
+import ProblemForm from "@/components/ProblemForm.vue";
 
 const routers = [
     {
@@ -12,8 +12,8 @@ const routers = [
                 component: ProblemList
             },
             {
-                path: 'new/problem',
-                component: NewProblem
+                path: 'problem/form',
+                component: ProblemForm
             }
         ]
     }

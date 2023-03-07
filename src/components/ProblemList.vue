@@ -11,11 +11,15 @@
           prop="id"
           label="ID">
       </el-table-column>
+
+
       <el-table-column
           align="center"
           prop="name"
           label="题目名称">
       </el-table-column>
+
+      <!--  题目标签    -->
       <el-table-column
           align="center"
           prop="tags"
@@ -25,8 +29,9 @@
             {{ tag }}
           </el-tag>
         </template>
-
       </el-table-column>
+
+      <!--  题目难度筛选    -->
       <el-table-column
           id="difficulty"
           :column-key="'difficulty'"
@@ -34,6 +39,14 @@
           align="center"
           prop="difficulty"
           label="难度">
+      </el-table-column>
+
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button v-on:click="editProblem(scope.row.id)" size="mini" type="primary">编辑</el-button>
+          <el-button v-on:click="deleteProblem(scope.row.id)" size="mini" type="danger">删除</el-button>
+        </template>
+
       </el-table-column>
     </el-table>
 
@@ -151,6 +164,23 @@ export default {
 
       // to page 1
       this.curPage = 1
+    },
+    editProblem(id){
+      for(let i=0; i<this.originData.length; i++){
+        if(this.originData[i].id === id){
+          this.$router.push({
+            path: '/problem/form',
+            query:{
+              type : 'update',
+              problemData : this.originData[i]
+            }
+          })
+          break;
+        }
+      }
+    },
+    deleteProblem(id){
+      console.log(id)
     }
   },
   beforeMount() {

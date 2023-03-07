@@ -30,7 +30,7 @@ export default {
       this.$router.push('/')
     },
     toNewProblem : function (){
-      this.$router.push('/new/problem')
+      this.$router.push('/problem/form')
     }
   }
 }
