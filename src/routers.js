@@ -1,15 +1,22 @@
 import NewProblem from "@/components/NewProblem.vue";
 import Main from "@/components/Main.vue";
+import ProblemList from "@/components/ProblemList.vue";
 
 const routers = [
     {
-        path: '/',  // 设置好route
-        name: 'MainPage',
-        component: Main
-    },{
-        path: '/new/problem',  // 设置好route
-        name: 'NewProblem',
-        component: NewProblem
+        path: '/',
+        component: Main,
+        children: [
+            {
+                path: 'problem/list',
+                component: ProblemList
+            },
+            {
+                path: 'new/problem',
+                component: NewProblem
+            }
+        ]
     }
+
 ]
 export default routers
