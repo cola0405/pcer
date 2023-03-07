@@ -27,7 +27,7 @@ export default {
   },
   methods : {
     toProblemList : function (){
-      this.$router.push('/problem/list')
+      this.$router.push('/')
     },
     toNewProblem : function (){
       this.$router.push('/new/problem')
