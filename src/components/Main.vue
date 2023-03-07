@@ -9,7 +9,7 @@
 
     <el-main>
       <!--      题目类型filter    -->
-      <ProblemFilter @typeFilter="doTypeFilter"></ProblemFilter>
+      <ProblemFilter @tagFilter="doTagFilter"></ProblemFilter>
 
       <br>
       <el-table
@@ -26,10 +26,21 @@
             label="题目名称">
         </el-table-column>
         <el-table-column
+            align="center"
+            prop="tags"
+            label="标签">
+          <template slot-scope="scope">
+            <el-tag v-for="tag in scope.row.tags" :key="tag">
+              {{ tag }}
+            </el-tag>
+          </template>
+
+        </el-table-column>
+        <el-table-column
             id="difficulty"
             :column-key="'difficulty'"
             :filters="[{ text:'简单', value: '简单'}, { text:'中等', value: '中等'}, { text:'困难', value: '困难'}]"
-            align="right"
+            align="center"
             prop="difficulty"
             label="难度">
         </el-table-column>
@@ -66,22 +77,22 @@ export default {
         id: '1',
         name: '贪心1',
         difficulty: '简单',
-        type: ['贪心']
+        tags: ['贪心']
       }, {
         id: '2',
         name: '贪心2',
         difficulty: '简单',
-        type: ['贪心']
+        tags: ['贪心']
       }, {
         id: '3',
         name: '排序1',
         difficulty: '中等',
-        type: ['排序']
+        tags: ['排序']
       }, {
         id: '4',
         name: '贪心3',
         difficulty: '简单',
-        type: ['贪心']
+        tags: ['贪心']
       }],
       showData : [],
       pageSize : 2,
@@ -99,18 +110,18 @@ export default {
       }
     },
     // 筛选算法类型
-    doTypeFilter : function (problemTypes){
+    doTagFilter : function (tags){
       // 无筛选
-      if(problemTypes.size === 0){
+      if(tags.size === 0){
         this.resetTableData()
       }else{
         this.tableData = []
 
         // 包含problemTypes的problems都放入tableData
         for(let i=0;i<this.originData.length;i++){
-          let curTypes = this.originData[i].type
-          let intersect = curTypes.filter(x => problemTypes.has(x))
-          if(intersect.length === problemTypes.size){
+          let curTags = this.originData[i].tags
+          let intersect = curTags.filter(x => tags.has(x))
+          if(intersect.length === tags.size){
             this.tableData.push(this.originData[i]);
           }
         }
@@ -180,5 +191,12 @@ export default {
 
 .el-pagination{
   margin: 10px;
+}
+
+.el-tag{
+  margin: 10px;
+}
+
+.el-table-column{
 }
 </style>
