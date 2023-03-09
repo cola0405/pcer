@@ -48,14 +48,15 @@
 </template>
 
 <script>
+import {newProblem} from "@/api/problem";
 export default {
   name: "ProblemForm",
   data() {
     return {
       form: {
-        name: '',
-        difficulty: '',
-        content: ''
+        name: null,
+        difficulty: null,
+        content: null
       },
       toolbars: {
         bold: false, // 粗体
@@ -94,22 +95,20 @@ export default {
   },
   methods: {
     onCreate() {
-      console.log('create');
+      newProblem(this.form)
     },
     onUpdate(){
-      console.log('update');
     },
     goBack(){
       this.$router.back()
     }
   },
-  beforeCreate() {
-
-  },
   created() {
     if(this.$route.query.type === 'update'){
       this.form.name = this.$route.query.problemData.name
       this.form.difficulty = this.$route.query.problemData.difficulty;
+      this.form.content = this.form.content = this.$route.query.problemData.content
+      console.log(this.$route.query.problemData.content)
   }
   }
 }
