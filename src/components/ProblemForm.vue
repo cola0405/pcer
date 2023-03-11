@@ -119,6 +119,6 @@ export default {
 }
 
 .el-page-header{
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 </style>

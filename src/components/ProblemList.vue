@@ -17,6 +17,10 @@
           align="center"
           prop="name"
           label="题目名称">
+        <template slot-scope="scope">
+<!--          v-on:click="toProblemPage(scope.row.id)"-->
+          <router-link  :to="{path:'/problem/page', query:{problemData: scope.row}}">{{scope.row.name}}</router-link>
+        </template>
       </el-table-column>
 
       <!--  题目标签    -->
@@ -161,6 +165,19 @@ export default {
     },
     deleteProblem(id){
       console.log(id)
+    },
+    toProblemPage(id){
+      for(let i=0; i<this.originData.length; i++){
+        if(this.originData[i].id === id){
+          this.$router.push({
+            path: '/problem/page',
+            query:{
+              problemData : this.originData[i]
+            }
+          })
+          break;
+        }
+      }
     }
   },
   beforeMount() {
