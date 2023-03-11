@@ -38,7 +38,6 @@
           <el-form-item>
             <el-button type="primary" @click="onCreate" v-if="$route.query.type !== 'update'">提交</el-button>
             <el-button type="primary" @click="onUpdate" v-else>提交</el-button>
-            <el-button>取消</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -107,8 +106,7 @@ export default {
     if(this.$route.query.type === 'update'){
       this.form.name = this.$route.query.problemData.name
       this.form.difficulty = this.$route.query.problemData.difficulty;
-      this.form.content = this.form.content = this.$route.query.problemData.content
-      console.log(this.$route.query.problemData.content)
+      this.form.content = this.$route.query.problemData.content
   }
   }
 }

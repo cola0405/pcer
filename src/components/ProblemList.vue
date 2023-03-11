@@ -73,30 +73,10 @@ export default {
   },
   data: function (){
     return {
-      tableData:[],
-      originData: [{
-        id: '1',
-        name: '贪心1',
-        difficulty: '简单',
-        tags: ['贪心']
-      }, {
-        id: '2',
-        name: '贪心2',
-        difficulty: '简单',
-        tags: ['贪心']
-      }, {
-        id: '3',
-        name: '排序1',
-        difficulty: '中等',
-        tags: ['排序']
-      }, {
-        id: '4',
-        name: '贪心3',
-        difficulty: '简单',
-        tags: ['贪心']
-      }],
-      showData : [],
-      pageSize : 2,
+      tableData: null,
+      originData: null,
+      showData : null,
+      pageSize : 10,
       curPage : 1
     }
   },
