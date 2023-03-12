@@ -77,9 +77,9 @@ export default {
   },
   data: function (){
     return {
-      tableData: null,
-      originData: null,
-      showData : null,
+      tableData: [],
+      originData: [],
+      showData : [],
       pageSize : 10,
       curPage : 1
     }

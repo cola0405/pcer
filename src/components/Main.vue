@@ -8,7 +8,7 @@
           <span slot="title">题目管理</span>
           <el-menu-item-group>
             <el-menu-item index="1-1" v-on:click="toNewProblem">新增题目</el-menu-item>
-            <el-menu-item index="1-2">编辑题目</el-menu-item>
+            <el-menu-item index="1-2" v-on:click="toTagManage">标签管理</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -31,6 +31,9 @@ export default {
     },
     toNewProblem : function (){
       this.$router.push('/problem/form')
+    },
+    toTagManage: function (){
+      this.$router.push('/tag/manage')
     }
   }
 }
