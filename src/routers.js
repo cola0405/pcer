@@ -2,7 +2,7 @@ import Main from "@/components/Main.vue";
 import ProblemList from "@/components/ProblemList.vue";
 import ProblemForm from "@/components/ProblemForm.vue";
 import ProblemPage from "@/components/ProblemPage.vue";
-import TagManage from "@/components/TagManage.vue";
+import TagManage from "@/components/TagManageDialog.vue";
 
 const routers = [
     {
