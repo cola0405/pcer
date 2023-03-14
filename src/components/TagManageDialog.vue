@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-page-header @back="goBack" content="标签管理"></el-page-header>
+    <el-page-header @back="headerGoBack" content="标签管理"></el-page-header>
     <div class="tags">
       <template v-for="(tag, i) in tagList">
           <el-input
@@ -8,18 +8,18 @@
               :key="i"
               :ref="'input'+i"
               v-if="editTag[i]"
-              v-model="tagList[i]"
-              @blur="handleTagEdit(i)"
+              v-model="tagList[i].name"
+              @blur="exitTagEdit(i)"
               size="small"></el-input>
 
           <el-tag
-              :key="tag"
+              :key="tag.name"
               v-else
               closable
               :disable-transitions="true"
-              @click="edit(i)"
-              @close="handleClose(tag)">
-            {{tag}}
+              @click="editTagContent(i)"
+              @close="deleteTag(tag)">
+            {{tag.name}}
           </el-tag>
       </template>
 
@@ -29,8 +29,8 @@
           v-model="inputValue"
           ref="saveTagInput"
           size="small"
-          @keyup.enter.native="handleInputConfirm"
-          @blur="handleInputConfirm"></el-input>
+          @keyup.enter.native="newTagConfirm"
+          @blur="newTagConfirm"></el-input>
       <el-button v-else class="button-new-tag" size="small" @click="newTag">+ New Tag</el-button>
     </div>
   </div>
@@ -55,13 +55,13 @@ export default {
     }
   },
   methods:{
-    goBack(){
+    headerGoBack(){
       this.$router.back()
     },
-    handleClose(tag) {
-      this.tagList.splice(this.tagList.indexOf(tag), 1);
+    deleteTag(tag) {
+      this.tagList.splice(this.tagList.indexOf(tag.name), 1);
     },
-    edit(i) {
+    editTagContent(i) {
       this.editTag[i] = true;
       // 强制刷新
       this.$forceUpdate()
@@ -70,24 +70,22 @@ export default {
         this.$refs['input'+i][0].$refs.input.focus()
       });
     },
-    // 聚焦
     newTag() {
       this.inputVisible = true;
       this.$nextTick(() => {
         this.$refs.saveTagInput.$refs.input.focus();
       });
     },
-
-    handleInputConfirm() {
+    newTagConfirm() {
       let inputValue = this.inputValue;
+      let item = {"id": 0, "name":inputValue}
       if (inputValue) {
-        this.tagList.push(inputValue);
+        this.tagList.push(item);
       }
       this.inputVisible = false;
       this.inputValue = '';
     },
-    // 失去聚焦
-    handleTagEdit(i){
+    exitTagEdit(i){
       this.editTag[i] = false
       // 强制刷新
       this.$forceUpdate()

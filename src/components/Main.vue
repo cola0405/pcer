@@ -11,14 +11,6 @@
             <el-menu-item index="2-2" v-on:click="toTagManage">标签管理</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
-
-        <el-submenu index="3">
-          <span slot="title">标签管理</span>
-          <el-menu-item-group>
-            <el-menu-item index="3-1" v-on:click="toNewProblem">新增标签</el-menu-item>
-            <el-menu-item index="3-2" v-on:click="toTagManage">修改标签</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
       </el-menu>
     </el-aside>
 

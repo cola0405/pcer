@@ -10,9 +10,9 @@
             <el-col :span="16">
               <div id="tags">
                 <el-checkbox
-                    v-for="name in tagList"
-                    :key="name"
-                    :label="name"
+                    v-for="tag in tagList"
+                    :key="tag.name"
+                    :label="tag.name"
                     border
                     size="medium"
                     @change="updateProblems"></el-checkbox>
@@ -55,15 +55,13 @@ export default {
   },
   methods: {
     updateProblems : function (value, e){
+      // 更新checked tag
       let name = e.target.value
       if(value === false){
         this.tags.delete(name)
       }else{
         this.tags.add(name)
       }
-      this.updateFilter()
-    },
-    updateFilter : function (){
       // 组件间通信
       this.$emit('tagFilter', this.tags)
     },
@@ -76,7 +74,7 @@ export default {
   },
   beforeCreate() {
     getTagList().then((res) =>{
-      console.log(res.data)
+      this.tagList = res.data.data.tagList
     })
   }
 
