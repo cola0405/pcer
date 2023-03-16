@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--      题目类型filter    -->
-    <ProblemFilter @tagFilter="doTagFilter"></ProblemFilter>
+    <ProblemFilter @tagFilter="doTagFilter" v-bind:tag-list="tagList"></ProblemFilter>
     <br>
     <el-table
         :data="showData"
@@ -18,8 +18,8 @@
           prop="name"
           label="题目名称">
         <template slot-scope="scope">
-<!--          v-on:click="toProblemPage(scope.row.id)"-->
-          <router-link  :to="{path:'/problem/page', query:{problemData: scope.row}}">{{scope.row.name}}</router-link>
+<!--          v-on:click="toProblemPage(scope.row.id)-->
+          <router-link :to="{ path:'/problem/page', query: {problemData: scope.row}}"> {{scope.row.name}} </router-link>
         </template>
       </el-table-column>
 
@@ -29,8 +29,8 @@
           prop="tags"
           label="标签">
         <template slot-scope="scope">
-          <el-tag v-for="tag in scope.row.tags" :key="tag">
-            {{ tag }}
+          <el-tag v-for="tag in scope.row.tags" :key="tag.name">
+            {{ tag.name }}
           </el-tag>
         </template>
       </el-table-column>
@@ -69,6 +69,7 @@
 <script>
 import ProblemFilter from "@/components/ProblemFilter.vue";
 import {getProblemList} from "@/api/problem";
+import {getTagList} from "@/api/tag";
 
 export default {
   name: "ProblemList",
@@ -79,9 +80,10 @@ export default {
     return {
       tableData: [],
       originData: [],
-      showData : [],
-      pageSize : 10,
-      curPage : 1
+      showData: [],
+      pageSize: 10,
+      curPage: 1,
+      tagList: []
     }
   },
   methods:{
@@ -105,7 +107,7 @@ export default {
         // 包含problemTypes的problems都放入tableData
         for(let i=0;i<this.originData.length;i++){
           let curTags = this.originData[i].tags
-          let intersect = curTags.filter(x => tags.has(x))
+          let intersect = curTags.filter(x => tags.has(x.name))
           if(intersect.length === tags.size){
             this.tableData.push(this.originData[i]);
           }
@@ -152,11 +154,13 @@ export default {
     editProblem(id){
       for(let i=0; i<this.originData.length; i++){
         if(this.originData[i].id === id){
+          console.log(this.originData[i])
           this.$router.push({
             path: '/problem/form',
             query:{
               type : 'update',
-              problemData : this.originData[i]
+              problemData : this.originData[i],
+              tagList: this.tagList
             }
           })
           break;
@@ -180,15 +184,19 @@ export default {
       }
     }
   },
-  beforeMount() {
+  beforeCreate() {
     getProblemList().then((res) => {
-      this.originData = res.data
+      this.originData = res.data.data.problemList
 
       // init table data
       this.resetTableData()
 
       // init page 1
       this.updatePage(1)
+    });
+
+    getTagList().then((res) =>{
+      this.tagList = res.data.data.tagList
     })
   },
 }

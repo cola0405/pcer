@@ -22,6 +22,21 @@
 
       <br>
 
+      <el-row>
+        <div id="tags">
+          <el-checkbox
+              v-for="tag in tagList"
+              :key="tag.name"
+              :label="tag.name"
+              v-model="form.selectedTags"
+              border
+              size="medium"
+              @change="updateTags"></el-checkbox>
+        </div>
+      </el-row>
+
+      <br>
+
       <el-row type="flex">
         <el-col :span="20">
           <el-form-item label="题目内容">
@@ -48,6 +63,7 @@
 
 <script>
 import {newProblem} from "@/api/problem";
+import {getTagList} from "@/api/tag";
 export default {
   name: "ProblemForm",
   data() {
@@ -55,7 +71,8 @@ export default {
       form: {
         name: null,
         difficulty: null,
-        content: null
+        content: null,
+        selectedTags: [],
       },
       toolbars: {
         bold: false, // 粗体
@@ -89,7 +106,8 @@ export default {
         /* 2.2.1 */
         subfield: true, // 单双栏模式
         preview: true // 预览
-      }
+      },
+      tagList:[]
     }
   },
   methods: {
@@ -100,6 +118,18 @@ export default {
     },
     goBack(){
       this.$router.back()
+    },
+    updateTags : function (value, e){
+      // 更新checked tag
+      let name = e.target.value
+      if(value === false){
+        this.tags.delete(name)
+      }else{
+        this.tags.add(name)
+      }
+
+      // 组件间通信
+      this.$emit('tagFilter', this.tags)
     }
   },
   created() {
@@ -107,7 +137,20 @@ export default {
       this.form.name = this.$route.query.problemData.name
       this.form.difficulty = this.$route.query.problemData.difficulty;
       this.form.content = this.$route.query.problemData.content
-  }
+      this.tagList = this.$route.query.tagList
+      let tags = this.$route.query.problemData.tags
+
+      // check tag list
+      for (let i=0; i<this.tagList.length;i++){
+        if (tags.find((tag) => tag.id === this.tagList[i].id)){
+            this.form.selectedTags.push(this.tagList[i].name)
+        }
+      }
+  }else{
+      getTagList().then((res) =>{
+        this.tagList = res.data.data.tagList
+      })
+    }
   }
 }
 </script>
@@ -120,5 +163,10 @@ export default {
 
 .el-page-header{
   margin-bottom: 30px;
+}
+
+#tags{
+  display: flex;
+  flex-wrap: wrap;
 }
 </style>

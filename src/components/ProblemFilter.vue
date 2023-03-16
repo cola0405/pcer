@@ -39,7 +39,8 @@
 
 <script>
 import TagManageDialog from "@/components/TagManageDialog.vue";
-import {getTagList, updateTags} from "@/api/tag";
+// import {getTagList, updateTags} from "@/api/tag";
+import {updateTags} from "@/api/tag";
 
 export default {
   name: "ProblemFilter",
@@ -48,9 +49,13 @@ export default {
     return {
       greedy: false,
       sort:false,
-      tagList: ["贪心", "排序","tt",],
       tags: new Set(),
       dialogFormVisible: false,
+    }
+  },
+  props: {
+    tagList: {
+      type: Array
     }
   },
   methods: {
@@ -73,9 +78,9 @@ export default {
 
   },
   beforeCreate() {
-    getTagList().then((res) =>{
-      this.tagList = res.data.data.tagList
-    })
+    // getTagList().then((res) =>{
+    //   this.tagList = res.data.data.tagList
+    // })
   }
 
 }
