@@ -62,13 +62,14 @@
 </template>
 
 <script>
-import {newProblem} from "@/api/problem";
+import {newProblem, updateProblem} from "@/api/problem";
 import {getTagList} from "@/api/tag";
 export default {
   name: "ProblemForm",
   data() {
     return {
       form: {
+        id: null,
         name: null,
         difficulty: null,
         content: null,
@@ -115,6 +116,10 @@ export default {
       newProblem(this.form)
     },
     onUpdate(){
+      updateProblem(this.form).then((res) => {
+        console.log(res)
+      })
+
     },
     goBack(){
       this.$router.back()
@@ -134,6 +139,7 @@ export default {
   },
   created() {
     if(this.$route.query.type === 'update'){
+      this.form.id = this.$route.query.problemData.id
       this.form.name = this.$route.query.problemData.name
       this.form.difficulty = this.$route.query.problemData.difficulty;
       this.form.content = this.$route.query.problemData.content

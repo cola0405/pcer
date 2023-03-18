@@ -11,9 +11,15 @@ export function getProblemList(){
 export function newProblem(formData){
     return axios.request({
         url: 'api/problem/new',
-        method:'post',
+        method: 'post',
         data: formData
     })
 }
 
-
+export function updateProblem(problem){
+    return axios.request({
+        url: 'api/problem/update',
+        method: 'post',
+        data: problem
+    })
+}
