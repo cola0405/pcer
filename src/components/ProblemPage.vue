@@ -5,7 +5,7 @@
         :toolbars="toolbars"
         :subfield="false"
         default-open="preview"
-        v-model="this.content"></mavon-editor>
+        v-model="content"></mavon-editor>
   </div>
 </template>
 
