@@ -76,6 +76,21 @@ export default {
   components : {
     ProblemFilter
   },
+  beforeCreate() {
+    getProblemList().then((res) => {
+      this.originData = res.data.data.problemList
+
+      // init table data
+      this.resetTableData()
+
+      // init page 1
+      this.updatePage(1)
+    });
+
+    getTagList().then((res) =>{
+      this.tagList = res.data.data.tagList
+    })
+  },
   data: function (){
     return {
       tableData: [],
@@ -183,21 +198,6 @@ export default {
         }
       }
     }
-  },
-  beforeCreate() {
-    getProblemList().then((res) => {
-      this.originData = res.data.data.problemList
-
-      // init table data
-      this.resetTableData()
-
-      // init page 1
-      this.updatePage(1)
-    });
-
-    getTagList().then((res) =>{
-      this.tagList = res.data.data.tagList
-    })
   },
 }
 </script>

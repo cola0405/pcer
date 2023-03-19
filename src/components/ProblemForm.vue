@@ -24,14 +24,14 @@
 
       <el-row>
         <div id="tags">
+<!--          @change="checkTag"-->
           <el-checkbox
               v-for="tag in tagList"
               :key="tag.name"
               :label="tag.name"
               v-model="form.selectedTags"
               border
-              size="medium"
-              @change="updateTags"></el-checkbox>
+              size="medium"></el-checkbox>
         </div>
       </el-row>
 
@@ -124,18 +124,20 @@ export default {
     goBack(){
       this.$router.back()
     },
-    updateTags : function (value, e){
-      // 更新checked tag
-      let name = e.target.value
-      if(value === false){
-        this.tags.delete(name)
-      }else{
-        this.tags.add(name)
-      }
-
-      // 组件间通信
-      this.$emit('tagFilter', this.tags)
-    }
+    // checkTag : function (value, e){
+    //   if (this.$route.query.type === 'update'){
+    //     // 更新checked tag
+    //     let name = e.target.value
+    //     if(value === false){
+    //       this.tags.delete(name)
+    //     }else{
+    //       this.tags.add(name)
+    //     }
+    //
+    //     // 组件间通信
+    //     this.$emit('tagFilter', this.tags)
+    //   }
+    // }
   },
   created() {
     if(this.$route.query.type === 'update'){
